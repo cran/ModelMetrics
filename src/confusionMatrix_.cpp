@@ -51,6 +51,18 @@ double npv_(NumericVector actual, NumericVector predicted, double cutoff) {
 }
 
 
+// [[Rcpp::export]]
+double tnr_(NumericVector actual, NumericVector predicted, double cutoff) {
+
+  double TN = sum(predicted < cutoff & actual == 0);
+  double N = sum(actual == 0);
+  double tnr = TN/N;
+
+  return tnr;
+
+}
+
+
 
 // [[Rcpp::export]]
 double recall_(NumericVector actual, NumericVector predicted, double cutoff) {
@@ -82,6 +94,26 @@ double brier_(NumericVector actual, NumericVector predicted){
 
   double brier = mean(pow(actual - predicted, 2));
   return brier;
+}
+
+
+// [[Rcpp::export]]
+double mcc_(NumericVector actual, NumericVector predicted, double cutoff){
+
+  // True Negatives
+  double TN = sum(predicted < cutoff & actual == 0);
+  // False Negatives
+  double FN = sum(predicted < cutoff & actual == 1);
+  // False positives
+  double FP = sum(predicted >= cutoff & actual == 0);
+  // True positives
+  double TP = sum(predicted >= cutoff & actual == 1);
+
+  double numerator = ((TP*TN) - (FP*FN));
+  double denom = sqrt((TP + FP)*(TP + FN)*(TN + FP)*(TN + FN));
+
+  double mcc = numerator/denom;
+  return mcc;
 }
 
 

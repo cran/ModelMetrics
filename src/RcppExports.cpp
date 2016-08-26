@@ -5,37 +5,16 @@
 
 using namespace Rcpp;
 
-// sort_rcpp
-NumericVector sort_rcpp(NumericVector x);
-RcppExport SEXP ModelMetrics_sort_rcpp(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(sort_rcpp(x));
-    return rcpp_result_gen;
-END_RCPP
-}
-// rank
-IntegerVector rank(NumericVector x);
-RcppExport SEXP ModelMetrics_rank(SEXP xSEXP) {
-BEGIN_RCPP
-    Rcpp::RObject rcpp_result_gen;
-    Rcpp::RNGScope rcpp_rngScope_gen;
-    Rcpp::traits::input_parameter< NumericVector >::type x(xSEXP);
-    rcpp_result_gen = Rcpp::wrap(rank(x));
-    return rcpp_result_gen;
-END_RCPP
-}
 // auc_
-double auc_(NumericVector actual, NumericVector predicted);
-RcppExport SEXP ModelMetrics_auc_(SEXP actualSEXP, SEXP predictedSEXP) {
+double auc_(NumericVector actual, NumericVector predicted, NumericVector ranks);
+RcppExport SEXP ModelMetrics_auc_(SEXP actualSEXP, SEXP predictedSEXP, SEXP ranksSEXP) {
 BEGIN_RCPP
     Rcpp::RObject rcpp_result_gen;
     Rcpp::RNGScope rcpp_rngScope_gen;
     Rcpp::traits::input_parameter< NumericVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type predicted(predictedSEXP);
-    rcpp_result_gen = Rcpp::wrap(auc_(actual, predicted));
+    Rcpp::traits::input_parameter< NumericVector >::type ranks(ranksSEXP);
+    rcpp_result_gen = Rcpp::wrap(auc_(actual, predicted, ranks));
     return rcpp_result_gen;
 END_RCPP
 }
@@ -78,6 +57,19 @@ BEGIN_RCPP
     return rcpp_result_gen;
 END_RCPP
 }
+// tnr_
+double tnr_(NumericVector actual, NumericVector predicted, double cutoff);
+RcppExport SEXP ModelMetrics_tnr_(SEXP actualSEXP, SEXP predictedSEXP, SEXP cutoffSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< double >::type cutoff(cutoffSEXP);
+    rcpp_result_gen = Rcpp::wrap(tnr_(actual, predicted, cutoff));
+    return rcpp_result_gen;
+END_RCPP
+}
 // recall_
 double recall_(NumericVector actual, NumericVector predicted, double cutoff);
 RcppExport SEXP ModelMetrics_recall_(SEXP actualSEXP, SEXP predictedSEXP, SEXP cutoffSEXP) {
@@ -113,6 +105,19 @@ BEGIN_RCPP
     Rcpp::traits::input_parameter< NumericVector >::type actual(actualSEXP);
     Rcpp::traits::input_parameter< NumericVector >::type predicted(predictedSEXP);
     rcpp_result_gen = Rcpp::wrap(brier_(actual, predicted));
+    return rcpp_result_gen;
+END_RCPP
+}
+// mcc_
+double mcc_(NumericVector actual, NumericVector predicted, double cutoff);
+RcppExport SEXP ModelMetrics_mcc_(SEXP actualSEXP, SEXP predictedSEXP, SEXP cutoffSEXP) {
+BEGIN_RCPP
+    Rcpp::RObject rcpp_result_gen;
+    Rcpp::RNGScope rcpp_rngScope_gen;
+    Rcpp::traits::input_parameter< NumericVector >::type actual(actualSEXP);
+    Rcpp::traits::input_parameter< NumericVector >::type predicted(predictedSEXP);
+    Rcpp::traits::input_parameter< double >::type cutoff(cutoffSEXP);
+    rcpp_result_gen = Rcpp::wrap(mcc_(actual, predicted, cutoff));
     return rcpp_result_gen;
 END_RCPP
 }
