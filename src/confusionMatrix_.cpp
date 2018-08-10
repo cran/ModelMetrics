@@ -7,13 +7,13 @@ NumericMatrix confusionMatrix_(NumericVector actual, NumericVector predicted, do
   NumericMatrix cMat = NumericMatrix(Dimension(2, 2));
 
   // True Negatives
-  cMat(0,0) = sum(predicted <= cutoff & actual == 0);
+  cMat(0,0) = sum((predicted <= cutoff) & (actual == 0));
   // False Negatives
-  cMat(0,1) = sum(predicted <= cutoff & actual == 1);
+  cMat(0,1) = sum((predicted <= cutoff) & (actual == 1));
   // False positives
-  cMat(1,0) = sum(predicted > cutoff & actual == 0);
+  cMat(1,0) = sum((predicted > cutoff) & (actual == 0));
   // True positives
-  cMat(1,1) = sum(predicted > cutoff & actual == 1);
+  cMat(1,1) = sum((predicted > cutoff) & (actual == 1));
 
   return cMat;
 
@@ -54,7 +54,7 @@ double npv_(NumericVector actual, NumericVector predicted, double cutoff) {
 // [[Rcpp::export]]
 double tnr_(NumericVector actual, NumericVector predicted, double cutoff) {
 
-  double TN = sum(predicted < cutoff & actual == 0);
+  double TN = sum((predicted < cutoff) & (actual == 0));
   double N = sum(actual == 0);
   double tnr = TN/N;
 
@@ -73,6 +73,22 @@ double recall_(NumericVector actual, NumericVector predicted, double cutoff) {
   return recall;
 
 }
+
+
+// [[Rcpp::export]]
+double fScore_(NumericVector actual, NumericVector predicted, double cutoff, double beta){
+
+  double p = ppv_(actual, predicted, cutoff);
+  double r = recall_(actual, predicted, cutoff);
+  double F = 0;
+
+  if(p + r != 0){
+    F = ((beta*beta + 1)*(p * r / (beta*beta*p + r)));
+  }
+
+  return F;
+}
+
 
 // [[Rcpp::export]]
 double f1Score_(NumericVector actual, NumericVector predicted, double cutoff){
@@ -101,13 +117,13 @@ double brier_(NumericVector actual, NumericVector predicted){
 double mcc_(NumericVector actual, NumericVector predicted, double cutoff){
 
   // True Negatives
-  double TN = sum(predicted < cutoff & actual == 0);
+  double TN = sum((predicted < cutoff) & (actual == 0));
   // False Negatives
-  double FN = sum(predicted < cutoff & actual == 1);
+  double FN = sum((predicted < cutoff) & (actual == 1));
   // False positives
-  double FP = sum(predicted >= cutoff & actual == 0);
+  double FP = sum((predicted >= cutoff) & (actual == 0));
   // True positives
-  double TP = sum(predicted >= cutoff & actual == 1);
+  double TP = sum((predicted >= cutoff) & (actual == 1));
 
   double numerator = ((TP*TN) - (FP*FN));
   double denom = sqrt((TP + FP)*(TP + FN)*(TN + FP)*(TN + FN));
@@ -116,4 +132,28 @@ double mcc_(NumericVector actual, NumericVector predicted, double cutoff){
   return mcc;
 }
 
+
+// [[Rcpp::export]]
+double kappa_(NumericVector actual, NumericVector predicted, double cutoff){
+
+  // True Negatives d
+  double TN = sum((predicted < cutoff) & (actual == 0));
+  // False Negatives - c
+  double FN = sum((predicted < cutoff) & (actual == 1));
+  // False positives - b
+  double FP = sum((predicted >= cutoff) & (actual == 0));
+  // True positives - a
+  double TP = sum((predicted >= cutoff) & (actual == 1));
+
+  double N = (TP + FP + FN + TN);
+
+  double po = (TP + TN)/N;
+  double margin_a = ((TP + FP)*(TP + FN))/N;
+  double margin_b = ((FN + TN)*(FP + TN))/N;
+
+  double pe = (margin_a + margin_b)/N;
+
+  double kappa = (po - pe)/(1 - pe);
+  return kappa;
+}
 

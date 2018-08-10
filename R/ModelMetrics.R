@@ -8,42 +8,6 @@ NULL
 #' @docType data
 NULL
 
-#' @title Log Loss
-#'
-#' @description Calculates the log loss or entropy loss for a binary outcome
-#'
-#' @param actual a binary vector of the labels
-#' @param predicted a vector of predicted values
-#' @param distribution the distribution of the loss function needed \code{binomial, poisson}
-#'
-#' @examples
-#' data(testDF)
-#' glmModel <- glm(y ~ ., data = testDF, family="binomial")
-#' Preds <- predict(glmModel, type = 'response')
-#'
-#' logLoss(testDF$y, Preds)
-#'
-#' @export
-
-logLoss <- function(actual, predicted, distribution = "binomial"){
-
-  eps <- 1e-15
-  predicted = pmax(pmin(predicted, 1 - eps), eps)
-
-  if(distribution == "binomial"){
-
-    return(logLoss_(actual, predicted))
-
-  } else if(distribution == 'poisson'){
-
-    return(plogLoss_(actual, predicted))
-
-  } else {
-    stop(paste(distribution, "is not defined. Please use binomial or poisson"))
-  }
-
-}
-
 
 #' @title Multiclass Log Loss
 #'
@@ -67,35 +31,6 @@ mlogLoss <- function(actual, predicted){
   predicted = pmax(pmin(predicted, 1 - eps), eps)
 
   mlogLoss_(actual, predicted)
-}
-
-
-
-#' @title Area Under the Curve
-#'
-#' @description Calculates the area under the curve for a binary classifcation model
-#'
-#' @param actual A vector of the labels. Can be \code{numeric, character, or factor}
-#' @param predicted A vector of predicted values
-#'
-#' @examples
-#' data(testDF)
-#' glmModel <- glm(y ~ ., data = testDF, family="binomial")
-#' Preds <- predict(glmModel, type = 'response')
-#'
-#' auc(testDF$y, Preds)
-#'
-#' @export
-
-auc <- function(actual, predicted){
-
-  binaryChecks(actual, 'auc')
-  if(class(actual) %in% c('factor', 'character')){
-    actual = as.numeric(as.factor(as.character(actual))) - 1
-  }
-  ranks <- rank(predicted)
-
-  auc_(actual, predicted, ranks)
 }
 
 
@@ -145,47 +80,6 @@ mauc <- function(actual, predicted){
   list(mauc = mean(AUCs), auc = AUCs)
 
 }
-
-
-#' @title Mean Square Error
-#' @description Calculates the mean square error
-#'
-#' @param actual A vector of the labels
-#' @param predicted A vector of predicted values
-#'
-#' @examples
-#' data(testDF)
-#' glmModel <- glm(y ~ ., data = testDF, family="binomial")
-#' Preds <- predict(glmModel, type = 'response')
-#'
-#' mse(testDF$y, Preds)
-#'
-#' @export
-
-mse <- function(actual, predicted){
-  mse_(actual, predicted)
-}
-
-
-#' @title Root-Mean Square Error
-#' @description Calculates the root mean square error
-#'
-#' @param actual A vector of the labels
-#' @param predicted A vector of predicted values
-#'
-#' @examples
-#' data(testDF)
-#' glmModel <- glm(y ~ ., data = testDF, family="binomial")
-#' Preds <- predict(glmModel, type = 'response')
-#'
-#' rmse(testDF$y, Preds)
-#'
-#' @export
-
-rmse <- function(actual, predicted){
-  rmse_(actual, predicted)
-}
-
 
 
 #' @title Confusion Matrix
@@ -325,7 +219,6 @@ specificity <- function(actual, predicted, cutoff = .5){
 }
 
 
-
 #' @title F1 Score
 #' @description Calculates the f1 score
 #'
@@ -341,83 +234,21 @@ f1Score <- function(actual, predicted, cutoff = .5){
 
 }
 
-
-
-#' @title Mean absolute error
-#' @description Calculates the mean absolute error
+#' @title F Score
+#' @description Calculates the F score and allows different specifications of the beta value (F0.5)
 #'
 #' @param actual A vector of the labels
 #' @param predicted A vector of predicted values
+#' @param cutoff A cutoff for the predicted values
+#' @param beta the desired beta value (lower increases weight of precision over recall). Defaults to 1
 #'
 #' @export
 
-mae <- function(actual, predicted){
+fScore <- function(actual, predicted, cutoff = .5, beta = 1){
 
-  mae_(actual, predicted)
-
-}
-
-
-
-#' @title Classification error
-#' @description Calculates the classification error
-#'
-#' @param actual A vector of the labels
-#' @param predicted A vector of predicted values
-#'
-#' @export
-
-ce <- function(actual, predicted){
-
-  ce_(actual, predicted)
+  fScore_(actual, predicted, cutoff, beta)
 
 }
-
-
-
-
-#' @title Mean Squared Log Error
-#' @description Calculates the mean square log error
-#'
-#' @param actual A vector of the labels
-#' @param predicted A vector of predicted values
-#'
-#' @export
-
-msle <- function(actual, predicted){
-  msle_(actual, predicted)
-}
-
-
-
-
-#' @title Root Mean Squared Log Error
-#' @description Calculates the mean square log error
-#'
-#' @param actual A vector of the labels
-#' @param predicted A vector of predicted values
-#'
-#' @export
-
-rmsle <- function(actual, predicted){
-  rmsle_(actual, predicted)
-}
-
-
-
-#' @title Brier Score
-#' @description Calculates the Brier score
-#'
-#' @param actual A vector of the labels
-#' @param predicted A vector of predicted values
-#'
-#' @export
-
-brier <- function(actual, predicted){
-  brier_(actual, predicted)
-}
-
-
 
 
 #' @title Matthews Correlation Coefficient
@@ -433,4 +264,20 @@ mcc <- function(actual, predicted, cutoff){
   mcc_(actual, predicted, cutoff)
 }
 
+
+
+
+#' @title kappa statistic
+#'
+#' @description Calculates kappa statistic. Currently build to handle binary values in \code{actual} vector.
+#'
+#' @param actual A vector of the labels
+#' @param predicted A vector of predicted values
+#' @param cutoff A cutoff for the predicted values
+#'
+#' @export
+
+kappa <- function(actual, predicted, cutoff = .5){
+  kappa_(actual, predicted, cutoff)
+}
 

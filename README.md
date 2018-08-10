@@ -2,6 +2,7 @@
 [![Build Status](https://travis-ci.org/JackStat/ModelMetrics.svg?branch=master)](https://travis-ci.org/JackStat/ModelMetrics)
 [![Build status](https://ci.appveyor.com/api/projects/status/evm55ctrlwp6fjs3/branch/master?svg=true)](https://ci.appveyor.com/project/JackStat/modelmetrics/branch/master)
 [![Coverage Status](https://coveralls.io/repos/github/JackStat/ModelMetrics/badge.svg?branch=master)](https://coveralls.io/github/JackStat/ModelMetrics?branch=master)
+[![Downloads](https://cranlogs.r-pkg.org/badges/ModelMetrics)](https://CRAN.R-project.org/package=ModelMetrics)
 
 Tyler Hunt thunt@snapfinance.com
 
@@ -52,9 +53,9 @@ data.frame(
 
 # MLmetrics and Metrics could not calculate so they are dropped from time comparison
 #        package   Time
-# 1 ModelMetrics  0.034
-# 2         pROC 85.289
-# 3         ROCR  0.565
+# 1 ModelMetrics  0.030
+# 2         pROC 50.359
+# 3         ROCR  0.358
 ```
 
 
