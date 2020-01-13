@@ -1,7 +1,7 @@
-dffd5a0478d0c3042b8f0affb68e1892 *DESCRIPTION
+d921ef9af9ed7c2a0694776bf1b22a1c *DESCRIPTION
 3b431e35360f5e19d6ab80b8e1a49a8e *NAMESPACE
 24c5958daf624431e315326fd9986378 *NEWS.md
-81f5b301139067acf5cd5e6d1d4a7c7f *R/ModelMetrics.R
+4e4a1a9f3ac2dbf51a5d46f18623e400 *R/ModelMetrics.R
 ed3a5654d72ad2ab4c3b30f68f05cc7e *R/RcppExports.R
 29ed52c149e0e39f9ac6a273800b8e44 *R/auc.R
 3548331a7b2c91664e40f37dfba33898 *R/binaryChecks.R
@@ -14,7 +14,7 @@ cec3f7eb0ed66186d6acc4e76e58d56e *R/logLoss.R
 51350cce192e966dcc8a81534e140a87 *R/msle.R
 f4609248a96ac700bdb722d555647f06 *R/rmsle.R
 835c423f58238a9bd96e15ef5dfb05de *README.md
-94a989fe38ef05dac738e1e1b2c9da87 *data/testDF.rda
+a62499dff46c9978854d29e3571aba7f *data/testDF.rda
 50b852520d70536f0a23add9fbcdea4e *man/auc.Rd
 e84da2b16a745588722b63987ae9b5cd *man/brier.Rd
 086d0c366da32c83da92dcee4b5af0dc *man/ce.Rd
