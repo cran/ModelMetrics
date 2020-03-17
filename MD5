@@ -1,4 +1,4 @@
-d921ef9af9ed7c2a0694776bf1b22a1c *DESCRIPTION
+f23cb2a6984ae37d2e483ef5a3434f1c *DESCRIPTION
 3b431e35360f5e19d6ab80b8e1a49a8e *NAMESPACE
 24c5958daf624431e315326fd9986378 *NEWS.md
 4e4a1a9f3ac2dbf51a5d46f18623e400 *R/ModelMetrics.R
@@ -38,10 +38,10 @@ ec1461026d6dfee0568801f16f808db2 *man/rmsle.Rd
 6e69b8f36272fbc0e5978c884de0d866 *man/testDF.Rd
 9681a958342e89bfa5d6444d17f8a7b4 *man/tnr.Rd
 96b93d92950fb41e7299f2da310cfa22 *src/RcppExports.cpp
-0adfba7661003e8555825a841ab5b1f9 *src/auc_.cpp
+8e5b33b1d0bef4394769ff972656f771 *src/auc_.cpp
 557f9ff45b746e964cb144d315563de2 *src/confusionMatrix_.cpp
 3073dd87d3fe9cb2f942dcafea9f8669 *src/error.cpp
-25ac364e82b9b07d6bbb6044f1ebc707 *src/gini_.cpp
+368705537bfeb0e789b84060da64453d *src/gini_.cpp
 20cdf5e56f75693ca30f491a426d6bef *src/logLoss_.cpp
 bb16f91f58e82e738df1dfa6bf6f6cc6 *tests/testthat.R
 bf8de8742209c6f32ede83d1b7baf623 *tests/testthat/test_auc.R

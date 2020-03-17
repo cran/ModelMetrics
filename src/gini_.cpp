@@ -1,5 +1,7 @@
 #include <Rcpp.h>
+#ifdef _OPENMP
 #include <omp.h>
+#endif
 using namespace Rcpp;
 
 // Assumes that actual is sorted by predicted values
